@@ -1,0 +1,83 @@
+//
+// !!! WARNING !!! AUTO-GENERATED FILE!
+// PLEASE DO NOT MODIFY IT AND USE "platformio.ini":
+// https://docs.platformio.org/page/projectconf/section_env_build.html#build-flags
+//
+{
+    "configurations": [
+        {
+            "name": "PlatformIO",
+            "includePath": [
+                "C:/dev/SeniorDesignBLE/NrfDK_BLESetup/include",
+                "C:/dev/SeniorDesignBLE/NrfDK_BLESetup/src",
+                "C:/Users/minec/.platformio/packages/framework-zephyr/include",
+                "C:/dev/SeniorDesignBLE/NrfDK_BLESetup/.pio/build/nrf52840_dk/zephyr/include/generated",
+                "C:/Users/minec/.platformio/packages/framework-zephyr/soc/arm/nordic_nrf/nrf52",
+                "C:/Users/minec/.platformio/packages/framework-zephyr/subsys/bluetooth",
+                "C:/Users/minec/.platformio/packages/framework-zephyr/_pio/modules/hal/cmsis/CMSIS/Core/Include",
+                "C:/Users/minec/.platformio/packages/framework-zephyr/_pio/modules/hal/nordic/nrfx",
+                "C:/Users/minec/.platformio/packages/framework-zephyr/_pio/modules/hal/nordic/nrfx/drivers/include",
+                "C:/Users/minec/.platformio/packages/framework-zephyr/_pio/modules/hal/nordic/nrfx/mdk",
+                "C:/Users/minec/.platformio/packages/framework-zephyr/modules/hal_nordic/nrfx",
+                "C:/Users/minec/.platformio/packages/framework-zephyr/_pio/modules/debug/segger/SEGGER",
+                "C:/Users/minec/.platformio/packages/framework-zephyr/_pio/modules/debug/segger/Config",
+                "C:/Users/minec/.platformio/packages/framework-zephyr/modules/segger",
+                "C:/Users/minec/.platformio/packages/framework-zephyr/_pio/modules/crypto/tinycrypt/lib/include",
+                ""
+            ],
+            "browse": {
+                "limitSymbolsToIncludedHeaders": true,
+                "path": [
+                    "C:/dev/SeniorDesignBLE/NrfDK_BLESetup/include",
+                    "C:/dev/SeniorDesignBLE/NrfDK_BLESetup/src",
+                    "C:/Users/minec/.platformio/packages/framework-zephyr/include",
+                    "C:/dev/SeniorDesignBLE/NrfDK_BLESetup/.pio/build/nrf52840_dk/zephyr/include/generated",
+                    "C:/Users/minec/.platformio/packages/framework-zephyr/soc/arm/nordic_nrf/nrf52",
+                    "C:/Users/minec/.platformio/packages/framework-zephyr/subsys/bluetooth",
+                    "C:/Users/minec/.platformio/packages/framework-zephyr/_pio/modules/hal/cmsis/CMSIS/Core/Include",
+                    "C:/Users/minec/.platformio/packages/framework-zephyr/_pio/modules/hal/nordic/nrfx",
+                    "C:/Users/minec/.platformio/packages/framework-zephyr/_pio/modules/hal/nordic/nrfx/drivers/include",
+                    "C:/Users/minec/.platformio/packages/framework-zephyr/_pio/modules/hal/nordic/nrfx/mdk",
+                    "C:/Users/minec/.platformio/packages/framework-zephyr/modules/hal_nordic/nrfx",
+                    "C:/Users/minec/.platformio/packages/framework-zephyr/_pio/modules/debug/segger/SEGGER",
+                    "C:/Users/minec/.platformio/packages/framework-zephyr/_pio/modules/debug/segger/Config",
+                    "C:/Users/minec/.platformio/packages/framework-zephyr/modules/segger",
+                    "C:/Users/minec/.platformio/packages/framework-zephyr/_pio/modules/crypto/tinycrypt/lib/include",
+                    ""
+                ]
+            },
+            "defines": [
+                "PLATFORMIO=60119",
+                "ARDUINO_NRF52_DK",
+                "BUILD_VERSION=zephyr-v20701",
+                "KERNEL",
+                "NRF52840_XXAA",
+                "_FORTIFY_SOURCE=2",
+                "__PROGRAM_START",
+                "__ZEPHYR__=1",
+                ""
+            ],
+            "cStandard": "c99",
+            "forcedInclude": [
+                "C:/dev/SeniorDesignBLE/NrfDK_BLESetup/.pio/build/nrf52840_dk/zephyr/include/generated/autoconf.h",
+                "C:/Users/minec/.platformio/packages/framework-zephyr/include/toolchain/zephyr_stdint.h",
+                ""
+            ],
+            "compilerPath": "C:/Users/minec/.platformio/packages/toolchain-gccarmnoneeabi/bin/arm-none-eabi-gcc.exe",
+            "compilerArgs": [
+                "-mcpu=cortex-m4",
+                "-mthumb",
+                "-mabi=aapcs",
+                "-mfp16-format=ieee",
+                "-isystem",
+                "C:/Users/minec/.platformio/packages/framework-zephyr/lib/libc/minimal/include",
+                "-isystem",
+                "c:/users/minec/.platformio/packages/toolchain-gccarmnoneeabi/bin/../lib/gcc/arm-none-eabi/8.2.1/include",
+                "-isystem",
+                "c:/users/minec/.platformio/packages/toolchain-gccarmnoneeabi/bin/../lib/gcc/arm-none-eabi/8.2.1/include-fixed",
+                ""
+            ]
+        }
+    ],
+    "version": 4
+}
