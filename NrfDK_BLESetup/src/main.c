@@ -2,11 +2,14 @@
 #include <sys/printk.h>
 #include <sys/byteorder.h>
 #include <zephyr/types.h>
+#include <random/rand32.h>
 
 #include <bluetooth/bluetooth.h>
 #include <bluetooth/hci.h>
 #include <bluetooth/conn.h>
 #include <bluetooth/gatt.h>
+#include <stdlib.h>
+#include <time.h>
 
 #define DEVICE_NAME CONFIG_BT_DEVICE_NAME
 #define DEVICE_NAME_LEN (sizeof(DEVICE_NAME) - 1)
@@ -15,9 +18,6 @@
 static const struct bt_data ad[] = {
 		BT_DATA_BYTES(BT_DATA_FLAGS, (BT_LE_AD_GENERAL | BT_LE_AD_NO_BREDR))};
 
-// GATT: Custom Sensor Service
-
-// Service UUID: 7e2a2b10-5b9a-4c8f-9d6a-2f6f2a4f8b01
 // Char UUID:    7e2a2b11-5b9a-4c8f-9d6a-2f6f2a4f8b01
 
 static struct bt_uuid_128 svc_uuid = BT_UUID_INIT_128(
@@ -30,10 +30,21 @@ struct __packed sensor_frame
 {
 	uint32_t t_s; // device uptime in s
 
-	// TODO: Update with actual sensor vars
-	int16_t s0;
-	int16_t s1;
-	int16_t s2;
+	uint32_t flex1;
+	uint32_t flex2;
+	uint32_t flex3;
+	uint32_t flex4;
+	uint32_t flex5;
+
+	uint32_t AccelX;
+	uint32_t AccelY;
+	uint32_t AccelZ;
+	uint32_t GyroX;
+	uint32_t GyroY;
+	uint32_t GyroZ;
+	uint32_t Pitch;
+	uint32_t Roll;
+	uint32_t Yaw;
 };
 
 static struct sensor_frame frame;
@@ -135,12 +146,28 @@ void main(void)
 	// Periodically update and notify
 	while (1)
 	{
+		// k_uptime_get() returns the time in milliseconds, but the deivce is currently only
+		//  broadcasting once per second, so it displays the time in uptime seconds
 		frame.t_s = ((uint32_t)k_uptime_get() / 1000);
 
-		// TODO: Update with actual sensor implementation
-		frame.s0++;
-		frame.s1 += 2;
-		frame.s2 -= 1;
+		// Sensor Value Readings, currently randomized just to show functionality of BLEAK connection
+		frame.flex1 = (uint32_t)(sys_rand32_get() % 10000);
+		frame.flex2 = (uint32_t)(sys_rand32_get() % 10000);
+		frame.flex3 = (uint32_t)(sys_rand32_get() % 10000);
+		frame.flex4 = (uint32_t)(sys_rand32_get() % 10000);
+		frame.flex5 = (uint32_t)(sys_rand32_get() % 10000);
+
+		frame.AccelX = (uint32_t)(sys_rand32_get() % 10000);
+		frame.AccelY = (uint32_t)(sys_rand32_get() % 10000);
+		frame.AccelZ = (uint32_t)(sys_rand32_get() % 10000);
+
+		frame.GyroX = (uint32_t)(sys_rand32_get() % 10000);
+		frame.GyroY = (uint32_t)(sys_rand32_get() % 10000);
+		frame.GyroZ = (uint32_t)(sys_rand32_get() % 10000);
+
+		frame.Pitch = (uint32_t)(sys_rand32_get() % 10000);
+		frame.Roll = (uint32_t)(sys_rand32_get() % 10000);
+		frame.Yaw = (uint32_t)(sys_rand32_get() % 10000);
 
 		if (notify_enabled)
 		{
