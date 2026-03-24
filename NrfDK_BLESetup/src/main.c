@@ -11,30 +11,38 @@
 #include <stdlib.h>
 #include <time.h>
 
+// #include "BLE_Utils.h"
+
+#include "ADC_Test.h"
+
+#include <drivers/adc.h>
+#include <nrfx_saadc.h>
+#include <devicetree.h>
+
 #define DEVICE_NAME CONFIG_BT_DEVICE_NAME
 #define DEVICE_NAME_LEN (sizeof(DEVICE_NAME) - 1)
 
 // Advertising
 static const struct bt_data ad[] = {
-		BT_DATA_BYTES(BT_DATA_FLAGS, (BT_LE_AD_GENERAL | BT_LE_AD_NO_BREDR))};
+	BT_DATA_BYTES(BT_DATA_FLAGS, (BT_LE_AD_GENERAL | BT_LE_AD_NO_BREDR))};
 
 // Char UUID:    7e2a2b11-5b9a-4c8f-9d6a-2f6f2a4f8b01
 
 static struct bt_uuid_128 svc_uuid = BT_UUID_INIT_128(
-		0x01, 0x8b, 0x4f, 0x2a, 0x6f, 0x2f, 0x6a, 0x9d, 0x8f, 0x4c, 0x9a, 0x5b, 0x10, 0x2b, 0x2a, 0x7e);
+	0x01, 0x8b, 0x4f, 0x2a, 0x6f, 0x2f, 0x6a, 0x9d, 0x8f, 0x4c, 0x9a, 0x5b, 0x10, 0x2b, 0x2a, 0x7e);
 
 static struct bt_uuid_128 chr_uuid = BT_UUID_INIT_128(
-		0x01, 0x8b, 0x4f, 0x2a, 0x6f, 0x2f, 0x6a, 0x9d, 0x8f, 0x4c, 0x9a, 0x5b, 0x11, 0x2b, 0x2a, 0x7e);
+	0x01, 0x8b, 0x4f, 0x2a, 0x6f, 0x2f, 0x6a, 0x9d, 0x8f, 0x4c, 0x9a, 0x5b, 0x11, 0x2b, 0x2a, 0x7e);
 
 struct __packed sensor_frame
 {
 	uint32_t t_s; // device uptime in s
 
-	uint32_t flex1;
-	uint32_t flex2;
-	uint32_t flex3;
-	uint32_t flex4;
-	uint32_t flex5;
+	int32_t flex1;
+	int32_t flex2;
+	int32_t flex3;
+	int32_t flex4;
+	int32_t flex5;
 
 	uint32_t AccelX;
 	uint32_t AccelY;
@@ -59,8 +67,8 @@ static void ccc_cfg_changed(const struct bt_gatt_attr *attr, uint16_t value)
 
 // Read handler (lets you read the last frame)
 static ssize_t read_frame(struct bt_conn *conn,
-													const struct bt_gatt_attr *attr,
-													void *buf, uint16_t len, uint16_t offset)
+						  const struct bt_gatt_attr *attr,
+						  void *buf, uint16_t len, uint16_t offset)
 {
 	const struct sensor_frame *f = attr->user_data;
 	return bt_gatt_attr_read(conn, attr, buf, len, offset, f, sizeof(*f));
@@ -68,12 +76,12 @@ static ssize_t read_frame(struct bt_conn *conn,
 
 // Define the BT service. attr order matters for bt_gatt_notify() pointer later.
 BT_GATT_SERVICE_DEFINE(sensor_svc,
-											 BT_GATT_PRIMARY_SERVICE(&svc_uuid),
-											 BT_GATT_CHARACTERISTIC(&chr_uuid.uuid,
-																							BT_GATT_CHRC_NOTIFY | BT_GATT_CHRC_READ,
-																							BT_GATT_PERM_READ,
-																							read_frame, NULL, &frame),
-											 BT_GATT_CCC(ccc_cfg_changed, BT_GATT_PERM_READ | BT_GATT_PERM_WRITE));
+					   BT_GATT_PRIMARY_SERVICE(&svc_uuid),
+					   BT_GATT_CHARACTERISTIC(&chr_uuid.uuid,
+											  BT_GATT_CHRC_NOTIFY | BT_GATT_CHRC_READ,
+											  BT_GATT_PERM_READ,
+											  read_frame, NULL, &frame),
+					   BT_GATT_CCC(ccc_cfg_changed, BT_GATT_PERM_READ | BT_GATT_PERM_WRITE));
 
 /* Attribute index helper:
  * attrs[0] = primary service
@@ -103,8 +111,8 @@ static void disconnected(struct bt_conn *conn, uint8_t reason)
 }
 
 BT_CONN_CB_DEFINE(conn_callbacks) = {
-		.connected = connected,
-		.disconnected = disconnected,
+	.connected = connected,
+	.disconnected = disconnected,
 };
 
 // Bluetooth ready + main loop
@@ -132,48 +140,55 @@ static void bt_ready(int err)
 
 void main(void)
 {
-	int err;
+	// int err;
 
 	printk("Starting BLE Sensor Peripheral\n");
 
-	err = bt_enable(bt_ready);
+	int err = bt_enable(bt_ready);
 	if (err)
 	{
 		printk("Bluetooth init failed (err %d)\n", err);
 		return;
 	}
 
+	configure_saadc();
 	// Periodically update and notify
 	while (1)
 	{
-		// k_uptime_get() returns the time in milliseconds, but the deivce is currently only
+		//  k_uptime_get() returns the time in milliseconds, but the deivce is currently only
 		//  broadcasting once per second, so it displays the time in uptime seconds
 		frame.t_s = ((uint32_t)k_uptime_get() / 1000);
 
-		// Sensor Value Readings, currently randomized just to show functionality of BLEAK connection
-		frame.flex1 = (uint32_t)(sys_rand32_get() % 10000);
-		frame.flex2 = (uint32_t)(sys_rand32_get() % 10000);
-		frame.flex3 = (uint32_t)(sys_rand32_get() % 10000);
-		frame.flex4 = (uint32_t)(sys_rand32_get() % 10000);
-		frame.flex5 = (uint32_t)(sys_rand32_get() % 10000);
+		int16_t flex[FLEX_CH_COUNT];
 
-		frame.AccelX = (uint32_t)(sys_rand32_get() % 10000);
-		frame.AccelY = (uint32_t)(sys_rand32_get() % 10000);
-		frame.AccelZ = (uint32_t)(sys_rand32_get() % 10000);
+		adc_get_latest_samples(flex);
 
-		frame.GyroX = (uint32_t)(sys_rand32_get() % 10000);
-		frame.GyroY = (uint32_t)(sys_rand32_get() % 10000);
-		frame.GyroZ = (uint32_t)(sys_rand32_get() % 10000);
+		frame.flex1 = flex[0];
+		frame.flex2 = flex[1];
+		frame.flex3 = flex[2];
+		frame.flex4 = flex[3];
+		frame.flex5 = flex[4];
 
-		frame.Pitch = (uint32_t)(sys_rand32_get() % 10000);
-		frame.Roll = (uint32_t)(sys_rand32_get() % 10000);
-		frame.Yaw = (uint32_t)(sys_rand32_get() % 10000);
+		printk("ADC: %d, %d, %d, %d, %d\n",
+			   flex[0], flex[1], flex[2], flex[3], flex[4]);
+
+		frame.AccelX = 0; //(uint32_t)(sys_rand32_get() % 10000);
+		frame.AccelY = 0; //(uint32_t)(sys_rand32_get() % 10000);
+		frame.AccelZ = 0; //(uint32_t)(sys_rand32_get() % 10000);
+
+		frame.GyroX = 0; //(uint32_t)(sys_rand32_get() % 10000);
+		frame.GyroY = 0; //(uint32_t)(sys_rand32_get() % 10000);
+		frame.GyroZ = 0; //(uint32_t)(sys_rand32_get() % 10000);
+
+		frame.Pitch = 0; //(uint32_t)(sys_rand32_get() % 10000);
+		frame.Roll = 0;	 //(uint32_t)(sys_rand32_get() % 10000);
+		frame.Yaw = 0;	 //(uint32_t)(sys_rand32_get() % 10000);
 
 		if (notify_enabled)
 		{
 			int nerr = bt_gatt_notify(
-					NULL, SENSOR_CHAR_VALUE_ATTR,
-					&frame, sizeof(frame));
+				NULL, SENSOR_CHAR_VALUE_ATTR,
+				&frame, sizeof(frame));
 
 			if (nerr)
 			{
