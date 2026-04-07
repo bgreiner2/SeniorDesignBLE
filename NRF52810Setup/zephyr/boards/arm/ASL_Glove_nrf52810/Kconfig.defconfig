@@ -1,0 +1,9 @@
+if BOARD_ASL_GLOVE_NRF52810
+
+config BOARD
+	default "ASL_Glove_nrf52810"
+
+config BT_CTLR
+	default BT
+
+endif

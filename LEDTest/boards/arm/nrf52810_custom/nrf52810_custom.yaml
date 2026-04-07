@@ -1,0 +1,11 @@
+identifier: nrf52810_custom
+name: Custom nRF52810 Board
+type: mcu
+arch: arm
+ram: 24
+flash: 192
+toolchain:
+  - zephyr
+  - gnuarmemb
+supported:
+  - gpio

@@ -13,6 +13,7 @@
                 "C:/Users/minec/.platformio/packages/framework-zephyr/include",
                 "C:/dev/SeniorDesignBLE/NrfDK_BLESetup/.pio/build/nrf52840_dk/zephyr/include/generated",
                 "C:/Users/minec/.platformio/packages/framework-zephyr/soc/arm/nordic_nrf/nrf52",
+                "C:/Users/minec/.platformio/packages/framework-zephyr/lib/libc/newlib/include",
                 "C:/Users/minec/.platformio/packages/framework-zephyr/subsys/bluetooth",
                 "C:/Users/minec/.platformio/packages/framework-zephyr/_pio/modules/hal/cmsis/CMSIS/Core/Include",
                 "C:/Users/minec/.platformio/packages/framework-zephyr/_pio/modules/hal/nordic/nrfx",
@@ -33,6 +34,7 @@
                     "C:/Users/minec/.platformio/packages/framework-zephyr/include",
                     "C:/dev/SeniorDesignBLE/NrfDK_BLESetup/.pio/build/nrf52840_dk/zephyr/include/generated",
                     "C:/Users/minec/.platformio/packages/framework-zephyr/soc/arm/nordic_nrf/nrf52",
+                    "C:/Users/minec/.platformio/packages/framework-zephyr/lib/libc/newlib/include",
                     "C:/Users/minec/.platformio/packages/framework-zephyr/subsys/bluetooth",
                     "C:/Users/minec/.platformio/packages/framework-zephyr/_pio/modules/hal/cmsis/CMSIS/Core/Include",
                     "C:/Users/minec/.platformio/packages/framework-zephyr/_pio/modules/hal/nordic/nrfx",
@@ -53,6 +55,7 @@
                 "KERNEL",
                 "NRF52840_XXAA",
                 "_FORTIFY_SOURCE=2",
+                "__LINUX_ERRNO_EXTENSIONS__",
                 "__PROGRAM_START",
                 "__ZEPHYR__=1",
                 ""
@@ -69,12 +72,6 @@
                 "-mthumb",
                 "-mabi=aapcs",
                 "-mfp16-format=ieee",
-                "-isystem",
-                "C:/Users/minec/.platformio/packages/framework-zephyr/lib/libc/minimal/include",
-                "-isystem",
-                "c:/users/minec/.platformio/packages/toolchain-gccarmnoneeabi/bin/../lib/gcc/arm-none-eabi/8.2.1/include",
-                "-isystem",
-                "c:/users/minec/.platformio/packages/toolchain-gccarmnoneeabi/bin/../lib/gcc/arm-none-eabi/8.2.1/include-fixed",
                 ""
             ]
         }

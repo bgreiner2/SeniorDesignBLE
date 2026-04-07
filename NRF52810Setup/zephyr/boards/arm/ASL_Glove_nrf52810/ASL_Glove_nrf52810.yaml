@@ -1,0 +1,18 @@
+identifier: ASL_Glove_nrf52810
+name: ASL Glove nRF52810
+type: mcu
+arch: arm
+ram: 24
+flash: 192
+toolchain:
+  - zephyr
+  - gnuarmemb
+supported:
+  - adc
+  - ble
+  - counter
+  - gpio
+  - i2c
+  - pwm
+  - spi
+  - watchdog

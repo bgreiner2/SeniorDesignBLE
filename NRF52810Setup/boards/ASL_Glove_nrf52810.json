@@ -1,0 +1,70 @@
+{
+  "build": {
+    "cpu": "cortex-m4",
+    "f_cpu": "64000000L",
+    "mcu": "nrf52810",
+    "zephyr": {
+      "variant": "ASL_Glove_nrf52810"
+    }
+  },
+  "connectivity": [
+    "bluetooth"
+  ],
+  "debug": {
+    "jlink_device": "nRF52810_xxAA",
+    "svd_path": "nrf52.svd"
+  },
+  "frameworks": [
+    "zephyr"
+  ],
+  "name": "ASL Glove nRF52810",
+  "upload": {
+    "maximum_ram_size": 24576,
+    "maximum_size": 192000,
+    "protocol": "jlink",
+    "protocols": [
+      "jlink"
+    ]
+  },
+  "url": "https://www.nordicsemi.com/Products/nRF52810",
+  "vendor": "Custom"
+}
+
+{
+  "build": {
+    "arduino": {
+      "ldscript": "nrf52810_xxaa.ld"
+    },
+    "core": "nRF5",
+    "cpu": "cortex-m4",
+    "extra_flags": "-DARDUINO_GENERIC",
+    "f_cpu": "64000000L",
+    "mcu": "nrf52810_xxaa",
+    "variant": "Generic"
+  },
+  "connectivity": [
+    "bluetooth"
+  ],
+  "debug": {
+    "jlink_device": "nRF52810_xxAA",
+    "svd_path": "nrf52.svd"
+  },
+  "frameworks": [
+    "arduino"
+  ],
+  "name": "Generic nRF52810",
+  "upload": {
+    "maximum_ram_size": 24576,
+    "maximum_size": 155648,
+    "protocol": "jlink",
+    "protocols": [
+      "jlink",
+      "nrfjprog",
+      "stlink",
+      "cmsis-dap",
+      "blackmagic"
+    ]
+  },
+  "url": "https://www.nordicsemi.com/Products/Bluetooth-Low-Energy",
+  "vendor": "Generic"
+}
