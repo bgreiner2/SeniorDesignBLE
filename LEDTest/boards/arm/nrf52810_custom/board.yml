@@ -1,5 +1,0 @@
-board:
-  name: nrf52810_custom
-  vendor: others
-  socs:
-    - name: nrf52810

@@ -1,6 +1,9 @@
 
 nrfjprog -f NRF52 --program "C:\dev\SeniorDesignBLE\810BLETest\BLE_nrf52810\build\n-able-Arduino.arm-ble.Generic_nRF52810\BLE_nrf52810.ino.hex" --chiperase --reset
 
+nrfjprog -f NRF52 --program "C:\dev\SeniorDesignBLE\810BLETest\NimBLE_Server\build\n-able-Arduino.arm-ble.Generic_nRF52810\NimBLE_Server.ino.hex" --chiperase --reset
+
 nrfjprog -f NRF52 --program "C:\dev\SeniorDesignBLE\ArduinoIDETest\BlinkLEDs\build\n-able-Arduino.arm-ble.Generic_nRF52810\BlinkLEDs.ino.hex" --chiperase --reset
 
 nrfjprog --deviceversion
+

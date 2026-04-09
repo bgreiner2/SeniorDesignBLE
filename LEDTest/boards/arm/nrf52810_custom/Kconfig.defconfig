@@ -1,6 +1,0 @@
-if BOARD_NRF52810_CUSTOM
-
-config BOARD
-    default "nrf52810_custom"
-
-endif

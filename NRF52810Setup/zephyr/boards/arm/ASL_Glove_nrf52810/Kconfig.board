@@ -1,3 +1,0 @@
-config BOARD_ASL_GLOVE_NRF52810
-	bool "ASL Glove nRF52810"
-	depends on SOC_NRF52810_QFAA

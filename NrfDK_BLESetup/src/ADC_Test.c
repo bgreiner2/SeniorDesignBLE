@@ -4,7 +4,7 @@
 #include <hal/nrf_saadc.h>
 
 #define FLEX_CH_COUNT 5
-#define FLEX_SAMPLE_INTERVAL_MS 900
+#define FLEX_SAMPLE_INTERVAL_MS 10
 
 static nrfx_saadc_channel_t channels[FLEX_CH_COUNT] = {
     NRFX_SAADC_DEFAULT_CHANNEL_SE(NRF_SAADC_INPUT_AIN1, 0),

@@ -1,4 +1,4 @@
-/* boards/nrf52dk_nrf52832.overlay */
+/* boards/nrf52840dk_nrf52840.overlay */
 
 / {
 	zephyr,user {

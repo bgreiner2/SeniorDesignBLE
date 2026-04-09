@@ -1,3 +1,0 @@
-config BOARD_NRF52810_CUSTOM
-    bool "Custom nRF52810 board"
-    select SOC_NRF52810_QFAA
