@@ -1,4 +1,3 @@
-
 /**
  *  NimBLE_Server Demo:
  *
